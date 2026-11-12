@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Bộ màu lấy từ Figma "figma nhóm 10 pttk" */
+:root {
+  --nen: #fff5f5;            /* nền trang, nút đang chọn */
+  --hong: #e9b8c2;           /* thanh bên */
+  --hong-dam: #e2b4bd;       /* đầu bảng, size đang chọn */
+  --hong-nhat: #eec4cc;      /* tag size, badge trạng thái */
+  --vien-hong: #d8a2a2;      /* viền ô nhập, nút phụ */
+  --bong-hong: 0 3px 10px #e9b8c1;  /* hiệu ứng "Mờ viền hồng" */
+  --xanh: #b5cd91;           /* nền nút chính */
+  --chu-xanh: #45631b;       /* chữ trên nút chính */
+  --nau: #3e2a1d;            /* "nâu gì á" */
+  --nau-dam: #2b1d14;        /* chữ chính */
+  --nau-phu: #6b5a4c;        /* chữ phụ */
+  --nau-nhat: #9a8676;       /* viền, chữ mờ */
+  --nau-nut: #7a4220;        /* nút viền nâu, link */
+  --xam-chu: #4a4a4a;
+  --font: 'Be Vietnam Pro', system-ui, Arial, sans-serif;
+  --font-inter: 'Inter', system-ui, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+/* #root lấp kín cửa sổ: rộng/cao = --w/--h (px thiết kế), thu/phóng theo --z (xem src/lib/scale.js) */
+body { margin: 0; overflow: hidden; font-family: var(--font); color: var(--nau-dam); background: var(--nen); }
+#root { width: var(--w, 100vw); height: var(--h, 100vh); overflow: hidden; zoom: var(--z, 1); }
+button { font-family: inherit; }
+h1 { margin: 0 0 16px; }
+.muted { color: var(--nau-phu); }
+
+/* ---------- Khung trang: thanh bên + nội dung ---------- */
+.layout { display: flex; height: 100%; }
+.sidebar {
+  flex: none; width: 247px; height: 100%; overflow-y: auto; scrollbar-width: none;
+  display: flex; flex-direction: column; padding: 30px 16px 26px; background: var(--hong);
+  color: var(--xam-chu); font-family: var(--font-inter);
+}
+.brand { display: flex; flex-direction: column; gap: 5px; }
+.brand b { font-size: 20px; font-weight: 700; }
+.brand small { font-size: 12px; }
+.sb-chinh { flex: 1; display: flex; flex-direction: column; gap: 18px; padding-top: 40px; }
+.sb-nhom { display: flex; flex-direction: column; gap: 8px; }
+.sb-nhom:first-child { gap: 12px; }
+.sb-tieude { margin: 0; font-size: 13px; font-weight: 600; }
+.nav {
+  display: flex; align-items: center; gap: 14px; height: 48px; padding: 0 0 0 16px; border: 0; border-radius: 10px;
+  background: none; color: var(--xam-chu); text-decoration: none; text-align: left; cursor: pointer;
+  font: 600 17px/20px var(--font-inter);
+}
+.nav img { width: 22px; height: 22px; flex: none; }
+.nav:hover { background: #fff5f580; }
+.nav.active { background: var(--nen); }
+.nav-dai { font-family: var(--font); }  /* mục BÁO CÁO dùng Be Vietnam Pro trong Figma */
+/* Nội dung lấp phần còn lại; chỉ cuộn bên trong khi dữ liệu nhiều hơn một màn hình */
+.content {
+  flex: 1; min-width: 0; height: 100%; overflow-y: auto; display: flex; flex-direction: column;
+  padding: 22px 26px 20px 24px; scrollbar-width: thin; scrollbar-color: var(--hong) transparent;
+}
+
+/* ---------- Thành phần dùng chung ---------- */
+.khung { background: #fff; border-radius: 10px; box-shadow: var(--bong-hong); }
+.dau-trang {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex: none;
+  min-height: 100px; padding: 16px 24px 16px 33px; margin-bottom: 18px;
+}
+.dau-trang h1 { margin: 0; font-size: 30px; line-height: 38px; font-weight: 700; color: #3b3b3b; }
+
+.nut { display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; white-space: nowrap; text-decoration: none; }
+.nut-xanh { background: var(--xanh); color: var(--chu-xanh); border: 0; }
+.nut-vien { background: #fff; color: var(--nau-nut); border: 1px solid var(--nau-nut); }
+.nut-phu { background: #fff; color: var(--nau-phu); border: 1px solid var(--vien-hong); }
+.nut:disabled { background: #f5f5f5; border: 1px solid #d9d9d9; color: #6e6e6e; cursor: default; }
+
+.chip-hang { display: flex; flex-wrap: wrap; gap: 12px; }
+.chip {
+  height: 43px; padding: 0 16px; border: 1px solid var(--nau-nhat); border-radius: 20px; background: #fff;
+  color: var(--nau); font: 400 13px/18px var(--font); cursor: pointer;
+}
+.chip.dang-chon { background: var(--xanh); border-color: var(--xanh); color: var(--xam-chu); font: 700 15px/22px var(--font); }
+
+.badge { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-weight: 700; white-space: nowrap; }
+.badge.chua { background: #fff1d6; color: #5c3d00; }
+.badge.da { background: #ddf3e4; color: #14532d; }
+.badge.huy { background: #ece7e1; color: #4a3f36; }
+
+.loi-tai { color: #c62828; }

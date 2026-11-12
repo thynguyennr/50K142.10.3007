@@ -1,0 +1,61 @@
+/* Quản lý khách hàng (UC 6.1, 6.2) */
+.kh { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.kh .giua { text-align: center; }
+.kh .phai { text-align: right; }
+.kh-nut-dau { display: flex; gap: 16px; }
+.kh-nut-dau .nut { height: 44px; padding: 0 18px; border-radius: 8px; font: 500 16px var(--font); }
+
+.kh-khung { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 20px 24px 14px; }
+.kh-tim { flex: none; align-self: flex-end; display: flex; align-items: center; gap: 10px; width: 380px; height: 44px; margin-bottom: 18px; padding: 0 14px; border: 1px solid var(--nau-nhat); border-radius: 6px; background: var(--nen); }
+.kh-tim img { width: 16px; height: 16px; }
+.kh-tim input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 400 15px var(--font); color: var(--nau); }
+
+.kh-dong {
+  display: grid; grid-template-columns: 90px 2fr 1.5fr 1.4fr 1.2fr 1.5fr; align-items: center; gap: 10px;
+  min-height: 58px; padding: 0 14px; border-bottom: 1px solid #a89585; font: 500 16px var(--font); color: #3e2a1d;
+}
+.kh-dau { flex: none; min-height: 46px; border: 0; border-radius: 6px; background: #e2b4bd; font-weight: 600; }
+.kh-than { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--hong) transparent; }
+.kh-xem { height: 40px; padding: 0 16px; font: 600 15px var(--font); }
+.kh-trong { padding: 16px; color: var(--nau-phu); }
+.kh-rong { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 60px 0 40px; }
+.kh-rong img { width: 56px; height: 56px; }
+.kh-rong p { margin: 0; font-size: 24px; font-weight: 600; color: var(--xam-chu); }
+
+/* ---------- Hồ sơ chi tiết khách hàng (UC 6.2 / 6.3) ---------- */
+.ctk-tieu-de { flex: none; margin: 0 0 12px; font-size: 32px; font-weight: 700; color: #3e2a1d; }
+.ctk-the { flex: none; display: grid; grid-template-columns: 1.3fr 1fr; gap: 26px 40px; margin-bottom: 18px; padding: 22px 30px; }
+.ctk-o { display: grid; grid-template-columns: 34px max-content 1fr; align-items: start; gap: 14px 24px; }
+.ctk-o > b { padding-top: 7px; font-size: 20px; font-weight: 600; color: #3e2a1d; }
+.ctk-o .sao { color: #e53e3e; }
+.ctk-so { display: grid; place-items: center; width: 34px; height: 36px; border-radius: 6px; background: #f2d9b8; font-size: 20px; font-weight: 700; color: #3e2a1d; }
+.ctk-o input { width: 100%; max-width: 280px; height: 42px; padding: 0 14px; border: 1px solid var(--vien-hong); border-radius: 8px; outline: none; font: 500 19px var(--font); color: #3e2a1d; }
+.ctk-o input.loi { border: 2px solid #e53e3e; }
+.ctk-o em { display: block; margin-top: 6px; font-style: normal; font-size: 13px; font-weight: 500; text-transform: uppercase; color: #e53e3e; }
+.ctk-gt { padding-top: 7px; font-size: 20px; font-weight: 600; color: #3e2a1d; }
+.ctk-bang { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 18px 24px 10px; }
+.ctk-dong { display: grid; grid-template-columns: 90px 1.6fr 2fr 1.2fr; align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border-bottom: 1px solid #a89585; font: 500 15px var(--font); color: #3e2a1d; }
+.ctk-dong.kh-dau { flex: none; border: 0; }
+.ctk-tong { flex: none; border-bottom: 0; font-weight: 600; }
+.ctk-nut { flex: none; display: flex; justify-content: flex-end; gap: 22px; margin-top: 14px; }
+.ctk-nut .nut { width: 150px; height: 52px; border-radius: 10px; font: 600 22px var(--font); }
+
+/* ---------- Xuất danh sách khách quen (UC 6.4) ---------- */
+.kq-quay-lai { width: 110px; height: 40px; font: 600 15px var(--font); }
+.kq-than { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 340px; gap: 28px; align-items: start; }
+.kq-bang { display: flex; flex-direction: column; max-height: 100%; padding: 18px 16px 14px; }
+.kq-dong { display: grid; grid-template-columns: 70px 1.6fr 1.3fr 1fr 1.2fr; align-items: center; gap: 10px; min-height: 56px; padding: 0 18px; border-bottom: 1px solid #a89585; font: 500 15px var(--font); color: #3e2a1d; }
+.kq-dong.kh-dau { flex: none; border: 0; }
+.kq-loi { color: #e00000 !important; }
+.kq-phai { display: flex; flex-direction: column; gap: 32px; }
+.kq-loc { padding: 22px 26px; }
+.kq-loc h2 { margin: 0 0 12px; text-align: center; font-size: 24px; font-weight: 600; color: var(--xam-chu); }
+.kq-phu { margin: 0 0 6px; font-size: 16px; color: var(--nau-phu); }
+.kq-loc label { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 16px; font-weight: 600; color: #3e2a1d; }
+.kq-loc input { height: 42px; padding: 0 14px; border: 1px solid var(--vien-hong); border-radius: 8px; outline: none; text-align: right; font: 500 17px var(--font); color: #3e2a1d; }
+.kq-loc input::placeholder { text-align: left; font-weight: 400; color: #a0938a; }
+.kq-loc input.loi { border: 2px solid #e00000; }
+.kq-ghi-chu { margin: 10px 0 0; font-size: 13px; color: var(--nau-phu); }
+.kq-nut { display: flex; justify-content: flex-end; gap: 22px; margin-top: 14px; }
+.kq-nut .nut { width: 80px; height: 42px; border-radius: 8px; font: 600 16px var(--font); }
+.kq-xuat { align-self: center; width: 300px; height: 82px; border-radius: 12px; font: 700 28px var(--font); }

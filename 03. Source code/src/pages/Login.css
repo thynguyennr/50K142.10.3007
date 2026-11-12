@@ -1,0 +1,57 @@
+/* Màn hình Đăng nhập - số đo lấy từ Figma; tiêu đề + thẻ căn giữa theo chiều cao màn hình */
+.dn-page {
+  position:relative; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:44px; padding-bottom:6%; background:#e9b8c2; overflow:hidden; font-family:'Inter',sans-serif;
+}
+
+.dn-title {
+  width:849px; max-width:96%; margin:0; text-align:center;
+  font:700 48px/normal 'Be Vietnam Pro',sans-serif; color:#452512;
+  text-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.dn-card {
+  width:647px; max-width:92%; box-sizing:border-box;
+  display:flex; flex-direction:column; gap:24px;
+  padding:36px 32px; background:#fff; border-radius:16px; box-shadow:0 5px 5px #3e2a1d;
+}
+.dn-card.co-loi { padding:34px 32px; gap:15px; }
+
+.dn-nhom { display:flex; flex-direction:column; gap:15px; }
+.dn-nhom-2 { gap:17px; }
+.co-loi .dn-nhom { gap:14px; }
+
+.dn-label { display:flex; align-items:center; gap:2px; font:500 24px/normal 'Inter',sans-serif; color:#4a4a4a; }
+.dn-sao { color:#e53e3e; }
+
+.dn-input {
+  display:flex; align-items:center; gap:10px; box-sizing:border-box; height:72px; padding:12px 14px;
+  background:#fff5f5; border:1px solid #d8a2a2; border-radius:8px;
+}
+.dn-input.loi { border-color:#e53e3e; }
+.dn-input:focus-within { box-shadow:0 0 0 2px rgba(181,205,145,.7); }
+.dn-input img { width:18px; height:18px; flex:none; }
+.dn-input input {
+  flex:1; min-width:0; width:auto; padding:0; border:0; border-radius:0; outline:none; background:transparent;
+  font:400 24px/normal 'Inter',sans-serif; color:#6b5a4c;
+}
+.dn-input input::placeholder { color:#6b5a4c; opacity:1; }
+.dn-mat { display:flex; padding:0; border:0; background:none; cursor:pointer; }
+
+.dn-loi { margin:0; font:500 18px/normal 'Inter',sans-serif; color:#e53e3e; }
+
+.dn-btn {
+  width:100%; height:60px; margin:0; border:0; border-radius:8px; cursor:pointer;
+  background:#b5cd91; color:#45631b; font:600 20px/normal 'Inter',sans-serif;
+  box-shadow:0 4px 6px rgba(255,255,255,.3);
+}
+.dn-btn:disabled { opacity:.7; cursor:default; }
+
+/* Popup thông báo lỗi (Đăng nhập lỗi 3 / lỗi 4): lớp phủ #D9D9D9 độ mờ 50% */
+.dn-overlay { position:fixed; inset:0; z-index:10; display:flex; align-items:center; justify-content:center; background:rgba(217,217,217,.5); }
+.dn-popup {
+  width:618px; max-width:92vw; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; gap:23px;
+  padding:31px 28px; background:#fff; border-radius:16px; box-shadow:0 8px 16px rgba(0,0,0,.25);
+  text-align:center; font:700 32px/normal 'Be Vietnam Pro',sans-serif; color:#e53e3e;
+}
+.dn-popup p { margin:0; }

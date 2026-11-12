@@ -1,0 +1,118 @@
+/* Tạo đơn bán hàng (Figma 1:6970) + popup chọn món (Figma 1:7848), co giãn lấp kín màn hình */
+.td { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.td-dau { flex: none; display: flex; flex-direction: column; justify-content: center; gap: 10px; min-height: 100px; padding: 0 33px 4px 43px; margin-bottom: 20px; }
+.td-dong-tieu-de { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.td-dau h1 { margin: 0 0 0 0; font-size: 30px; line-height: 38px; font-weight: 700; color: #3b3b3b; }
+.td-ma, .td-tt { display: inline-flex; align-items: center; gap: 5px; border-radius: 5px; font: 600 15px/normal var(--font-inter); }
+.td-ma { padding: 3px 8px; background: var(--xanh); color: var(--chu-xanh); }
+.td-tt { padding: 4px 10px; background: var(--hong-nhat); color: var(--xam-chu); }
+.td-tt img { width: 7px; height: 7px; }
+.td-gio { display: flex; align-items: center; gap: 6px; margin: 0; font: 400 12px/normal var(--font-inter); color: var(--nau-phu); }
+.td-gio img { width: 13px; height: 13px; }
+
+/* Cột trái (lưới 2 cột món) : cột phải (món đã gọi) ≈ 42 : 58 */
+.td-than { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); gap: 28px; }
+
+/* Cột trái: tìm + lọc + lưới món (cuộn khi nhiều món) */
+.td-trai { display: flex; flex-direction: column; min-width: 0; min-height: 0; padding-left: 12px; }
+.td-tim { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 13px; border: 1px solid var(--vien-hong); border-radius: 20px; background: #fff; }
+.td-tim img { width: 16px; height: 16px; }
+.td-tim input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: var(--nau); font: 400 13px/normal var(--font); }
+.td-tim input::placeholder { color: var(--nau-nhat); }
+.td-nhom { gap: 13px; margin: 12px 0 18px; }
+
+/* chừa 6px quanh lưới để không cắt bóng đổ của thẻ */
+.td-luoi {
+  flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px;
+  align-content: start; padding: 6px; margin: -6px; overflow-x: hidden; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: var(--hong) transparent;
+}
+
+/* Thẻ món: giữ đúng tỉ lệ thẻ Figma 242 x 128. Mọi kích thước bên trong tính theo cqw
+   (1cqw = 1% bề rộng thẻ; Figma 1px = 100/242 cqw ≈ 0.4132cqw) nên thẻ to/nhỏ thì chữ,
+   tag và nút gạt to/nhỏ theo, nút gạt luôn nằm đúng vị trí như thiết kế. */
+.td-mon {
+  container-type: inline-size; border-radius: 10px; background: #fff; box-shadow: 0 1px 5px #e9b8c2;
+  font-family: var(--font); text-align: left;
+}
+.td-mon-trong { display: flex; flex-direction: column; gap: 7.02cqw; padding: 5.79cqw; }
+.td-mon.chon-duoc { cursor: pointer; }
+.td-mon.chon-duoc:hover, .td-mon.chon-duoc:focus-visible { outline: 2px solid var(--xanh); }
+.td-mon-trong > b { font-size: 6.2cqw; line-height: 1.25; font-weight: 700; color: var(--xam-chu); }
+.td-size { display: flex; gap: 3.31cqw; }
+.td-size span {
+  padding: 1.24cqw 3.31cqw; border-radius: 1.65cqw; background: var(--hong-nhat); color: var(--nau-phu);
+  font-size: 4.55cqw; font-weight: 600; white-space: nowrap;
+}
+.td-mon-duoi { display: flex; align-items: center; justify-content: space-between; }
+.td-con-ban { padding: 1.65cqw 4.13cqw; border-radius: 2.48cqw; background: var(--xanh); color: var(--chu-xanh); font-size: 4.96cqw; font-weight: 600; }
+.td-con-ban.het { background: #fff6c4; color: #e8b400; }
+
+/* Nút gạt (Figma 55 x 25): xanh dương = Còn bán, vàng = Tạm hết */
+.td-gat {
+  position: relative; flex: none; width: 22.73cqw; height: 10.33cqw; padding: 0; border: 0; border-radius: 999px;
+  background: #ffcc00; cursor: pointer; transition: background .2s;
+}
+.td-gat::after {
+  content: ''; position: absolute; top: 50%; left: 0.83cqw; width: 8.26cqw; height: 8.26cqw; border-radius: 50%;
+  background: #fff; transform: translateY(-50%); transition: left .2s;
+}
+.td-gat.bat { background: #0088ff; }
+.td-gat.bat::after { left: 13.64cqw; }
+.td-gat:focus-visible { outline: 2px solid var(--nau); outline-offset: 2px; }
+.td-gat.chi-xem { display: inline-block; cursor: default; }
+.td-mon.dang-chon { outline: 2px solid var(--vien-hong); }
+
+/* Không tìm thấy món */
+.td-khong-thay { display: flex; flex-direction: column; align-items: center; gap: 22px; padding-top: 40px; }
+.td-khong-thay img { width: 40px; height: 40px; }
+.td-khong-thay p { margin: 0; font-size: 20px; font-weight: 700; color: var(--xam-chu); }
+
+/* Cột phải: món đã gọi (chữ to hơn Figma ~1.25 lần cho cân với khung rộng) */
+.td-phai { display: flex; flex-direction: column; min-height: 0; padding: 28px 28px 22px 44px; }
+.td-phai h2 { margin: 0; font-size: 25px; line-height: 1.3; font-weight: 700; color: var(--xam-chu); }
+.td-ds {
+  flex: 0 1 auto; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 26px;
+  margin: 22px 0 26px -8px; padding: 8px 16px 8px 8px; scrollbar-width: thin; scrollbar-color: var(--hong) transparent;
+}
+.td-goi { display: flex; flex-direction: column; gap: 6px; border-radius: 8px; }
+.td-goi.sua-duoc { cursor: pointer; }
+.td-goi.sua-duoc:hover { background: var(--nen); box-shadow: 0 0 0 8px var(--nen); }
+.td-goi .hang { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.td-goi .ten { display: flex; align-items: center; gap: 12px; }
+.td-goi .ten b { font-size: 19px; color: var(--xam-chu); }
+.td-goi .tag { padding: 3px 8px; border-radius: 5px; background: var(--hong-nhat); color: var(--nau-phu); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.td-goi .tt, .td-goi .sl { font-size: 18px; color: var(--xam-chu); }
+.td-goi .gia { font-size: 16px; color: var(--nau-phu); }
+.td-goi .ghi-chu { font-size: 15px; color: var(--nau-phu); }
+.td-tong { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 16px 0 0; border-top: 1px dashed var(--vien-hong); }
+.td-tong b { font-size: 22px; color: var(--xam-chu); }
+.td-nut { display: flex; justify-content: flex-end; gap: 18px; margin-top: auto; }
+.td-nut .nut { width: 120px; height: 44px; padding: 0 18px; font: 600 17px/normal var(--font); }
+.td-nut .luu { font-weight: 700; }
+
+/* Popup chọn món */
+.td-phu { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 16px; background: rgba(217, 217, 217, .4); }
+.td-popup { width: 520px; max-width: 100%; padding: 28px; border-radius: 16px; background: #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, .25); }
+.td-popup h2 { margin: 0 0 9px; font-size: 32px; line-height: 52px; font-weight: 700; color: var(--xam-chu); }
+.td-popup .nhan { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--xam-chu); }
+.td-chon-size { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 31px; }
+.td-chon-size button {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 14px; border: 1px solid var(--vien-hong);
+  border-radius: 8px; background: #fff; cursor: pointer; font-family: var(--font);
+}
+.td-chon-size b { font-size: 14px; font-weight: 600; color: var(--xam-chu); }
+.td-chon-size span { font-size: 13px; color: var(--nau-phu); }
+.td-chon-size button.chon { background: var(--hong-dam); border-color: var(--nau); }
+.td-chon-size button.chon b { font-weight: 700; color: var(--nen); }
+.td-chon-size button.chon span { color: var(--nen); opacity: .85; }
+.td-sl { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; font: 600 15px/normal var(--font-inter); color: var(--nau); }
+.td-sl button { width: 28px; height: 28px; padding: 0; border: 1px solid #ebddd9; border-radius: 6px; background: #fff; cursor: pointer; font: 700 16px/1 var(--font-inter); }
+.td-sl .tru { color: #9f7557; }
+.td-sl .cong { color: #654b3d; }
+.td-loi-sl { margin: -14px 0 14px; font-size: 13px; font-weight: 700; text-transform: uppercase; color: #e53e3e; }
+.td-ghi { width: 100%; padding: 10px 14px; margin-bottom: 19px; border: 1px solid var(--vien-hong); border-radius: 8px; background: #fafafa; outline: none; font: 400 13px/normal var(--font); color: var(--nau); }
+.td-ghi::placeholder { font-style: italic; color: #c0a898; }
+.td-popup-nut { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.td-popup-nut .nut { height: 38px; padding: 10px 20px; font: 600 14px/normal var(--font); }
+.td-popup-nut .nut-xanh { font-weight: 700; }

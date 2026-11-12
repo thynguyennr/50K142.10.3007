@@ -1,0 +1,67 @@
+/* Xem chi tiết đơn (6.3.4) + Chỉnh sửa đơn (6.3.7) – dùng lại .td-dau (TaoDon.css) và bảng .tt-* (ThanhToan.css) */
+.sd { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.sd .td-dau { margin-bottom: 18px; }
+.sd .tt-bang { flex: 0 1 auto; min-height: 0; }
+.sd-trong { margin: 0; padding: 20px; text-align: center; font-size: 15px; color: var(--nau-phu); }
+
+/* ---------- Chi tiết đơn ---------- */
+.ct-the { flex: none; display: grid; grid-template-columns: 1fr 1.25fr; gap: 14px; margin-bottom: 22px; }
+.ct-o { min-height: 104px; padding: 14px 20px; }
+.ct-o h3 { margin: 0 0 8px; font-size: 16px; font-weight: 500; text-transform: uppercase; color: #6e4a3f; }
+.ct-o p { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; color: var(--xam-chu); }
+.ct-o p img { width: 18px; height: 18px; }
+.ct-o .ct-chua { color: var(--nau-phu); }
+.ct-o .ct-phu { margin-top: 6px; padding-left: 26px; font-size: 14px; color: var(--nau-phu); }
+.ct-bang .tt-dong { grid-template-columns: minmax(0, 3fr) 0.8fr 0.6fr 1.6fr 1.6fr; }
+/* Dòng tổng tiền: nhãn bên trái, số tiền sát phải (không theo lưới cột của bảng) */
+.sd .tt-bang .tt-tong { grid-template-columns: 1fr auto; }
+
+/* ---------- Chỉnh sửa đơn ---------- */
+.sd-dau-bang { flex: none; display: flex; align-items: center; justify-content: space-between; margin: 4px 0 12px; }
+.sd-dau-bang .tt-tieu-de { margin: 0; }
+.sd-them { height: 38px; padding: 0 16px; font: 700 15px var(--font); border-radius: 8px; }
+.sd-bang .tt-dong { grid-template-columns: minmax(0, 2.6fr) 0.8fr 1.1fr 1.1fr 1.3fr 0.6fr; }
+.sd-dong { cursor: pointer; }
+.sd-dong:hover { background: #fffafb; }
+.sd-dong.khoa { background: #fdf6f7; }
+.sd-da-pha, .sd-chua-pha { font-style: normal; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+.sd-da-pha { color: #e53e3e; }
+.sd-chua-pha { color: #e26a7c; font-weight: 600; }
+
+.sd-sl { display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: default; }
+.sd-sl button {
+  width: 28px; height: 28px; padding: 0; border: 1px solid #ebddd9; border-radius: 6px; background: #fff;
+  cursor: pointer; font: 700 16px/1 var(--font-inter); color: #654b3d;
+}
+.sd-sl b { min-width: 18px; font-size: 17px; }
+.sd-sl button:disabled, .sd-xoa:disabled { opacity: .4; cursor: not-allowed; }
+.sd-xoa { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 6px; background: none; cursor: pointer; }
+.sd-xoa:hover:not(:disabled) { background: #fde8eb; }
+.sd-xoa img { width: 20px; height: 20px; }
+
+.sd-nut { flex: none; display: flex; justify-content: flex-end; gap: 18px; margin-top: 18px; }
+.sd-nut .nut, .sd-nut-don { width: 120px; height: 44px; font: 700 16px var(--font); border-radius: 8px; }
+.sd-nut-don { margin-top: 12px; }
+
+/* ---------- Popup "Thêm món vào đơn" ---------- */
+.tm-hop {
+  display: flex; flex-direction: column; width: 1130px; max-width: 100%; height: min(600px, calc(var(--h, 100vh) - 60px));
+  border-radius: 16px; background: #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, .25); overflow: hidden;
+}
+.tm-hop h2 { flex: none; margin: 0; padding: 20px 32px; border-bottom: 1px solid #f1e3e3; font-size: 26px; font-weight: 700; color: var(--nau); }
+.tm-than { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.tm-trai { display: flex; flex-direction: column; gap: 14px; min-height: 0; padding: 20px; border-right: 1px solid #f1e3e3; background: #fdfafa; }
+.tm-tim input::placeholder { font-style: italic; }
+.tm-luoi {
+  flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-content: start;
+  padding: 4px; margin: -4px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--hong) transparent;
+}
+.tm-luoi .td-mon { box-shadow: none; border: 1px solid #ecc8cf; }
+.tm-phai { display: flex; flex-direction: column; min-height: 0; padding: 26px 32px 24px; overflow-y: auto; }
+.tm-goi-y { margin: auto 0; text-align: center; font-size: 16px; color: var(--nau-phu); }
+.tm-nho { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--nau-nhat); }
+.tm-ten { margin: 4px 0 20px; font-size: 24px; color: var(--nau); }
+.tm-phai .nhan { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--xam-chu); }
+.tm-phai .td-chon-size { margin-bottom: 22px; }
+.tm-nut { margin-top: auto; padding-top: 18px; }
+.tm-nut .nut { height: 44px; }

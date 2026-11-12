@@ -1,0 +1,21 @@
+/* Đổi mật khẩu (UC 8) */
+.dmk { display: flex; flex-direction: column; gap: 18px; }
+.dmk-dau { padding: 18px 33px; }
+.dmk-dau h1 { margin: 0; font-size: 30px; line-height: 38px; font-weight: 700; color: #3b3b3b; }
+.dmk-dau p { margin: 4px 0 0; font-size: 15px; color: var(--nau-phu); }
+.dmk-form { display: flex; flex-direction: column; gap: 6px; padding: 36px 6% 30px; }
+.dmk-o { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+.dmk-o label { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: var(--xam-chu); }
+.dmk-o label img { width: 18px; height: 18px; }
+.dmk-o .sao { margin-left: -4px; align-self: flex-start; font-size: 16px; color: #e53e3e; }
+.dmk-nhap { display: flex; align-items: center; height: 54px; padding: 0 14px 0 20px; border: 1px solid #4a4a4a; border-radius: 10px; background: #fff; }
+.dmk-nhap:focus-within { border-color: var(--vien-hong); box-shadow: 0 0 0 2px #e9b8c255; }
+.dmk-nhap.loi { border: 2px solid #e53e3e; }
+.dmk-nhap input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 400 18px var(--font); color: var(--xam-chu); }
+.dmk-nhap input::placeholder { color: #6e6e6e; }
+.dmk-nhap button { display: grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 6px; background: none; cursor: pointer; }
+.dmk-nhap button:hover { background: var(--nen); }
+.dmk-loi { display: flex; align-items: center; gap: 10px; margin: 2px 0 0 12px; font-size: 16px; color: #e53e3e; }
+.dmk-loi span { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; background: #9b2c2c; color: #fff; font-size: 13px; font-weight: 700; }
+.dmk-nut { display: flex; justify-content: flex-end; gap: 14px; margin-top: 6px; }
+.dmk-nut .nut { width: 90px; height: 40px; border-radius: 6px; font: 600 15px var(--font); }
