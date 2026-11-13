@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import iconUser from '../assets/icons/user.svg'
 import iconLock from '../assets/icons/lock.svg'
 import iconEye from '../assets/icons/eye.svg'
+import iconEyeOff from '../assets/icons/eye-off.svg'
 import iconAlert from '../assets/icons/alert-triangle.svg'
 import './Login.css'
 
@@ -73,7 +74,7 @@ export default function Login() {
               placeholder="Nhập mật khẩu..." autoComplete="current-password" />
             <button type="button" className="dn-mat" onClick={() => setHien(!hien)}
               aria-label={hien ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}>
-              <img src={iconEye} alt="" />
+              <img src={hien ? iconEye : iconEyeOff} alt="" />
             </button>
           </div>
           {loi.mk && <p className="dn-loi">{loi.mk}</p>}

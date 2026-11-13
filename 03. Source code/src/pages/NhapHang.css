@@ -115,3 +115,5 @@
 .pn-tong { font-weight: 600; }
 .pn-bien-lai { display: grid; place-items: center; height: min(420px, calc(var(--h, 100vh) - 330px)); border: 4px dashed #7a7a7a; color: var(--nau-phu); overflow: hidden; }
 .pn-bien-lai img { width: 100%; height: 100%; object-fit: contain; }
+/* Theo thiết kế: khung "Số lượng thực nhận" và "Hình thức thanh toán" canh trái như khung yêu cầu nhưng hẹp hơn bên phải (~81%) */
+.xl-khung.xl-nhan, .xl-khung.xl-tt-khung { width: 81%; }
