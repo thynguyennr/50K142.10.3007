@@ -4,8 +4,9 @@ import { supabase } from '../lib/supabase'
 import { TAM_HET } from '../lib/mon'
 import { trangThaiTon, canNhap, sapXepKho, so2, chuanTen, taiNguyenLieu } from '../lib/kho'
 import iSearch from '../assets/icons/search.svg'
-import iSearchLon from '../assets/icons/search-lon.svg'
-import iLoi from '../assets/icons/alert-triangle.svg'
+import iSearchLon from '../assets/icons/search-nau.svg'
+import iCanhBao from '../assets/icons/canh-bao-nau.svg'
+import iNhac from '../assets/icons/canh-bao-vien.svg'
 import iKho from '../assets/icons/nav-kho.svg'
 import './Kho.css'
 
@@ -50,8 +51,8 @@ export default function Kho() {
 
       {monHet.length > 0 && (
         <div className="kho-nhac">
-          <img src={iLoi} alt="" />
-          Nhắc nhập hàng: món {monHet.map((t) => `“${t}”`).join(', ')} đang “Tạm hết” do thiếu nguyên liệu. Vui lòng nhập hàng sớm.
+          <img src={iNhac} alt="" />
+          Nhắc nhập hàng: món {monHet.map((t) => `“${t}”`).join(', ')} vừa chuyển sang “Tạm hết” do thiếu nguyên liệu. Vui lòng nhập hàng sớm.
         </div>
       )}
 
@@ -81,17 +82,19 @@ export default function Kho() {
               <p>{rong ? 'Chưa có nguyên liệu trong kho' : 'Không tìm thấy nguyên liệu'}</p>
               {!rong && <small>Thử sửa hoặc xóa từ khóa để tìm nguyên liệu.</small>}</div>
           )}
-          {hienThi.map((n) => {
+          {hienThi.map((n, i) => {
             const tt = trangThaiTon(n.tonkho, n.muctontoithieu)
             const can = tt !== 'Đủ'
+            // Màu nền xen kẽ đậm/nhạt trong từng nhóm (Cần nhập hồng, Chưa cần nhập xanh), dòng đầu mỗi nhóm đậm
+            const viTriNhom = hienThi.slice(0, i).filter((x) => canNhap(x) === can).length
             return (
-              <div className={'kho-dong ' + (can ? 'can' : 'du')} key={n.manl}>
+              <div className={'kho-dong ' + (can ? 'can' : 'du') + (viTriNhom % 2 ? '' : ' dam')} key={n.manl}>
                 <span className="giua">{stt.get(n.manl)}</span>
                 <b>{n.tennl}</b>
                 <b className="giua">{so2(n.tonkho)}</b>
                 <span className="giua">{n.donvitinh}</span>
                 <span className="kho-cb">
-                  {can ? <b className="do"><img src={iLoi} alt="" />Cần nhập hàng</b> : <b>Chưa cần nhập</b>}
+                  {can ? <b className="do"><img src={iCanhBao} alt="" />Cần nhập hàng</b> : <b>Chưa cần nhập</b>}
                   <small>{tt === 'Hết' ? 'Hết tồn' : tt === 'Sắp hết' ? 'Sắp hết' : 'Đủ tồn'}</small>
                 </span>
               </div>
@@ -99,7 +102,7 @@ export default function Kho() {
           })}
         </div>
         {ds && (
-          <p className="kho-chan">Hiển thị {hienThi.length} / {ds.length} nguyên liệu.{rong ? '' : ' Cần nhập hàng lên đầu (Hết tồn → Sắp hết → Đủ tồn); cùng trạng thái xếp theo tên.'}</p>
+          <p className="kho-chan">Hiển thị {hienThi.length} / {ds.length} nguyên liệu.{rong ? '' : loc === 'tat-ca' ? ' Cần nhập hàng lên đầu; cùng trạng thái xếp theo tên.' : ' Hết tồn → Sắp hết → Đủ tồn; cùng trạng thái xếp theo tên.'}</p>
         )}
       </div>
     </div>

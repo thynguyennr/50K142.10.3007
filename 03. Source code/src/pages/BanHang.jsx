@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import ThongBao from '../components/ThongBao'
 import iSearchLon from '../assets/icons/search-lon.svg'
+import iSearch from '../assets/icons/search.svg'
 import { supabase } from '../lib/supabase'
 import { tien, thoiGian, TRANG_THAI, lopBadge } from '../lib/format'
 import './BanHang.css'
@@ -54,7 +55,7 @@ export default function BanHang() {
             ))}
           </div>
           <label className="bh-tim">
-            <span aria-hidden="true">⌕</span>
+            <img src={iSearch} alt="" />
             <input value={tim} onChange={(e) => setTim(e.target.value)} placeholder="Tìm theo mã đơn" />
           </label>
         </div>

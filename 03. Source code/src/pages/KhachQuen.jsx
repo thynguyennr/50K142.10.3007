@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { so } from '../lib/format'
 import ThongBao from '../components/ThongBao'
@@ -16,7 +15,6 @@ const docSo = (s) => {
 
 // UC 6.4 Xuất danh sách khách quen
 export default function KhachQuen() {
-  const nav = useNavigate()
   const [ds, setDs] = useState(null)
   const [loiTai, setLoiTai] = useState('')
   const [soLan, setSoLan] = useState('')
@@ -38,8 +36,8 @@ export default function KhachQuen() {
     if (a == null && b == null) l.chung = true // 4a: chưa nhập tiêu chí
     setLoi(l)
     if (Object.keys(l).length) return setKetQua(null)
-    // BR6.4_01: đạt ít nhất 1 tiêu chí đã nhập
-    const kq = (ds || []).filter((k) => (a != null && Number(k.solanmua) >= a) || (b != null && Number(k.tongtienmua) >= b))
+    // Nhóm chốt (khớp ảnh thiết kế): nhập cả 2 tiêu chí thì khách phải đạt CẢ HAI; chỉ nhập 1 thì lọc theo tiêu chí đó
+    const kq = (ds || []).filter((k) => (a == null || Number(k.solanmua) >= a) && (b == null || Number(k.tongtienmua) >= b))
       .sort((x, y) => Number(y.solanmua) - Number(x.solanmua) || Number(y.tongtienmua) - Number(x.tongtienmua))
     setKetQua(kq)
   }
@@ -71,7 +69,6 @@ export default function KhachQuen() {
     <div className="kh">
       <div className="khung dau-trang">
         <h1>Xuất danh sách khách quen</h1>
-        <button className="nut nut-phu kq-quay-lai" onClick={() => nav('/khach-hang')}>Quay lại</button>
       </div>
 
       <div className="kq-than">

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { tien, TRANG_THAI } from '../lib/format'
-import iLoi from '../assets/icons/alert-triangle.svg'
-import iCot from '../assets/icons/nav-bao-cao.svg'
+import iLoi from '../assets/icons/canh-bao-nau.svg'
+import iCot from '../assets/icons/cot-hong.svg'
+import iMui from '../assets/icons/chevron-hong.svg'
 import './BaoCaoKy.css'
 
 // Dùng chung cho UC 7.1 Báo cáo doanh thu (loai="bao-cao") và UC 7.2 Thống kê món bán chạy (loai="thong-ke").
@@ -44,7 +45,7 @@ export default function BaoCaoKy({ loai }) {
     }
     setLoi(''); setLoiTai(''); setDangTai(true)
     const { data, error } = await supabase.from('donhang')
-      .select('tongtien,chitietdonban(mamon,soluong,thanhtien,dongia,mon(tenmon,nhommon))')
+      .select('tongtien,thoigianthanhtoan,chitietdonban(mamon,soluong,thanhtien,dongia,mon(tenmon,nhommon))')
       .eq('trangthai', TRANG_THAI.DA).gte('thoigianthanhtoan', bd.toISOString()).lt('thoigianthanhtoan', kt.toISOString())
     setDangTai(false)
     if (error) return setLoiTai(error.message)
@@ -61,15 +62,33 @@ export default function BaoCaoKy({ loai }) {
     // Xếp hạng đồng hạng theo số lượng (thống kê) / theo doanh thu (báo cáo)
     ds.forEach((m, i) => { const truoc = ds[i - 1]; m.hang = truoc && (tk ? truoc.sl === m.sl : truoc.dt === m.dt) ? truoc.hang : i + 1 })
     const tong = data.reduce((t, d) => t + Number(d.tongtien), 0)
-    setKq({ nhan, ds, tong, ly: ds.reduce((t, m) => t + m.sl, 0) })
+    // Ghi chú cuối trang: các đơn rơi vào những ngày nào trong kỳ
+    const ngayBan = [...new Set(data.map((d) => { const t = new Date(d.thoigianthanhtoan); return `${t.getFullYear()}-${hai(t.getMonth() + 1)}-${hai(t.getDate())}` }))].sort()
+    let ghiChu
+    if (ky === 'ngay') ghiChu = `Có ${data.length} đơn đã thanh toán trong ${nhan}.`
+    else if (ngayBan.length === 1) ghiChu = `Các đơn đã thanh toán của ${nhan} đều phát sinh ngày ${dmy(ngayBan[0])}.`
+    else ghiChu = `Các đơn đã thanh toán của ${nhan} phát sinh trong ${ngayBan.length} ngày, từ ${dmy(ngayBan[0])} đến ${dmy(ngayBan[ngayBan.length - 1])}.`
+    setKq({ nhan, ds, tong, ly: ds.reduce((t, m) => t + m.sl, 0), ghiChu })
   }
   const baoLoi = (s) => { setLoi(s); setKq(null) }
 
   const coLoi = Boolean(loi)
-  const o = (v, set, kieu = 'date') => (
-    <input type={kieu} className={coLoi && !v ? 'loi' : coLoi && ky === 'khoang' ? 'loi' : ''} value={v}
-      onChange={(e) => { set(e.target.value); setLoi('') }} />
-  )
+  // Ô chọn ngày/tháng: luôn hiển thị dd/mm/yyyy (mm/yyyy) bất kể ngôn ngữ trình duyệt;
+  // ô date gốc nằm trong suốt phía trên, bấm vào thì mở bộ chọn ngày của trình duyệt
+  const o = (v, set, kieu = 'date') => {
+    const loiO = coLoi && (!v || ky === 'khoang')
+    const hien = !v ? (kieu === 'month' ? 'Chọn tháng' : 'Chọn ngày')
+      : kieu === 'month' ? v.split('-').reverse().join('/') : dmy(v)
+    return (
+      <span className={'bck-o' + (loiO ? ' loi' : '') + (v ? '' : ' trong')}>
+        <span>{hien}</span>
+        {!loiO && <img src={iMui} alt="" />}
+        <input type={kieu} value={v} aria-label={kieu === 'month' ? 'Chọn tháng' : 'Chọn ngày'}
+          onClick={(e) => e.currentTarget.showPicker?.()}
+          onChange={(e) => { set(e.target.value); setLoi('') }} />
+      </span>
+    )
+  }
 
   return (
     <div className="bck">
@@ -160,6 +179,7 @@ export default function BaoCaoKy({ loai }) {
               ) : null
             })()}
           </div>
+          <p className="bck-ghi-ngoai">{kq.ghiChu}</p>
         </div>
       )}
     </div>

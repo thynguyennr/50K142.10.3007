@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { so2, chuanTen, docSoLe, taiNguyenLieu, capNhatNguyenLieu } from '../lib/kho'
 import ThongBao from '../components/ThongBao'
 import iSearch from '../assets/icons/search.svg'
-import iSearchLon from '../assets/icons/search-lon.svg'
-import iLoi from '../assets/icons/alert-triangle.svg'
+import iSearchLon from '../assets/icons/search-nau.svg'
+import iLoi from '../assets/icons/canh-bao-nau.svg'
+import iLoiTron from '../assets/icons/loi-tron.svg'
 import './Kho.css'
 
 // UC 5.1 Kiểm kê tồn kho
@@ -97,7 +98,7 @@ export default function KiemKe() {
               <span className="kk-o">
                 <input className={loi[n.manl] ? 'loi' : ''} value={nhap[n.manl] ?? ''} inputMode="decimal" maxLength={10} placeholder="Để trống"
                   onChange={(e) => { setNhap((x) => ({ ...x, [n.manl]: e.target.value })); setLoi((x) => ({ ...x, [n.manl]: false })) }} />
-                {loi[n.manl] && <em>ⓘ Số lượng không hợp lệ</em>}
+                {loi[n.manl] && <em><img src={iLoiTron} alt="" />Số lượng không hợp lệ</em>}
               </span>
             </div>
           ))}

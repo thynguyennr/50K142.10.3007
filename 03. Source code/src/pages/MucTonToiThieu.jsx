@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { trangThaiTon, so2, chuanTen, docSoLe, taiNguyenLieu, capNhatNguyenLieu } from '../lib/kho'
 import iSearch from '../assets/icons/search.svg'
-import iSearchLon from '../assets/icons/search-lon.svg'
-import iLoi from '../assets/icons/alert-triangle.svg'
+import iSearchLon from '../assets/icons/search-nau.svg'
+import iCanhBao from '../assets/icons/canh-bao-nau.svg'
+import iLoiTron from '../assets/icons/loi-tron.svg'
 import iXong from '../assets/icons/check-circle.svg'
 import './Kho.css'
 
@@ -49,7 +50,6 @@ export default function MucTonToiThieu() {
           <h1>Thiết lập mức tồn tối thiểu</h1>
           <p className="kho-phu">Chọn nguyên liệu và đặt mức tồn tối thiểu riêng để hệ thống cảnh báo khi sắp hết</p>
         </div>
-        <button className="nut nut-phu kho-quay-lai" onClick={() => nav('/kho')}>Quay lại</button>
       </div>
 
       {xong && <div className="kho-nhac xong"><img src={iXong} alt="" />Thiết lập thành công</div>}
@@ -82,10 +82,10 @@ export default function MucTonToiThieu() {
               </div>
             ))}
           </div>
-          {ds && ds.length > 0 && <p className="kho-chan">{hienThi.length === ds.length ? `Hiển thị đủ ${ds.length} nguyên liệu` : `Hiển thị ${hienThi.length} / ${ds.length} nguyên liệu`}</p>}
+          {ds && hienThi.length > 0 && <p className="kho-chan">{hienThi.length === ds.length ? `Hiển thị đủ ${ds.length} nguyên liệu` : `Hiển thị ${hienThi.length} / ${ds.length} nguyên liệu`}</p>}
         </div>
 
-        <div className="khung mt-phai">
+        {(!ds || hienThi.length > 0) && <div className="khung mt-phai">
           {!nl ? (
             <div className="mt-goi-y">
               <h2>Chọn nguyên liệu</h2>
@@ -100,22 +100,22 @@ export default function MucTonToiThieu() {
                 <input className={loi ? 'loi' : ''} value={gt} inputMode="decimal" maxLength={10} placeholder="Nhập mức mới" autoFocus
                   onChange={(e) => { setGt(e.target.value); setLoi(''); setXong(false) }} onKeyDown={(e) => e.key === 'Enter' && luu()} />
               </label>
-              {loi && <p className="mt-loi">ⓘ {loi}</p>}
+              {loi && <p className="mt-loi"><img src={iLoiTron} alt="" />{loi}</p>}
               <p className="mt-ghi">Dùng cùng đơn vị tính với nguyên liệu. Số lượng tồn không thay đổi.</p>
               {xong && (
                 <div className="mt-kq">
                   {tt === 'Đủ' ? <b>Đủ tồn · Chưa cần nhập</b>
-                    : <b className="do"><img src={iLoi} alt="" />{tt} · Cần nhập hàng</b>}
+                    : <b className="do"><img src={iCanhBao} alt="" />{tt} · Cần nhập hàng</b>}
                   <small>Đã tính lại cảnh báo theo mức mới {so2(nl.muctontoithieu)} {nl.donvitinh}. Tồn vẫn là {so2(nl.tonkho)} {nl.donvitinh}.</small>
                 </div>
               )}
               <div className="mt-nut">
-                <button className="nut nut-phu" onClick={() => { setChon(''); setXong(false) }}>Hủy</button>
+                <button className="nut nut-phu" onClick={() => nav('/kho')}>Hủy</button>
                 <button className="nut nut-xanh" onClick={luu} disabled={dangLuu}>{dangLuu ? 'Đang lưu' : 'Lưu'}</button>
               </div>
             </>
           )}
-        </div>
+        </div>}
       </div>
     </div>
   )

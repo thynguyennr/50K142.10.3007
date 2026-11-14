@@ -9,6 +9,21 @@ import './NhapHang.css'
 const CHON_YC = `mayc,trangthai,thoigianlap,nhacungcap(tenncc),
   chitietyeucau(manl,soluongcan,nguyenlieu(tennl,donvitinh))`
 
+// Đơn giá nhập gần nhất của từng nguyên liệu: ưu tiên lần nhập mới nhất trong chitietnhap,
+// nếu chưa từng nhập thì dùng nguyenlieu.gianhapthamkhao (nếu database có cột này)
+async function layGiaGanNhat(dsManl) {
+  const gia = {}
+  const { data } = await supabase.from('chitietnhap').select('manl,dongianhap,mapn')
+    .in('manl', dsManl).not('dongianhap', 'is', null).order('mapn', { ascending: false })
+  for (const d of data || []) if (gia[d.manl] == null) gia[d.manl] = Number(d.dongianhap)
+  const con = dsManl.filter((m) => gia[m] == null)
+  if (con.length) {
+    const kq = await supabase.from('nguyenlieu').select('manl,gianhapthamkhao').in('manl', con)
+    for (const n of kq.data || []) if (n.gianhapthamkhao != null) gia[n.manl] = Number(n.gianhapthamkhao)
+  }
+  return gia
+}
+
 // UC 4.2 Nhập hàng: xác nhận đặt hàng / hủy -> nhập số lượng thực nhận -> thanh toán -> lưu phiếu nhập
 export default function XuLyNhapHang() {
   const [cho, setCho] = useState(null)       // yêu cầu "Chờ báo giá"
@@ -82,6 +97,14 @@ export default function XuLyNhapHang() {
     if (ct.some((c) => ketQua(c) !== 'khop')) return setThongBao({ loai: 'loi', noiDung: 'Hàng chưa đủ hoặc chưa đúng' })
     // 8b là luồng thay thế: ảnh biên lai không bắt buộc
     setDangGui(true)
+    // Màn hình (theo thiết kế) không có ô đơn giá -> lấy đơn giá của lần nhập gần nhất của từng nguyên liệu
+    const giaCu = await layGiaGanNhat(ct.map((c) => c.manl))
+    const thieuGia = ct.filter((c) => giaCu[c.manl] == null)
+    if (thieuGia.length) {
+      setDangGui(false)
+      return setThongBao({ loai: 'loi', noiDung: 'Chưa có đơn giá nhập',
+        chiTiet: `Chưa có lần nhập trước cho: ${thieuGia.map((c) => c.nguyenlieu?.tennl).join(', ')}. Cần khai báo giá nhập tham khảo cho nguyên liệu này trên Supabase.` })
+    }
     // Mã phiếu do database tự sinh. Trigger trg_nhap_kho tự cộng tồn kho khi thêm chitietnhap (BR4.2_04),
     // trigger trg_hoantat_yeucau chuyển yêu cầu sang "Đã nhập hàng".
     const kq = await supabase.from('phieunhap')
@@ -91,7 +114,7 @@ export default function XuLyNhapHang() {
     if (!error) {
       const mapn = kq.data.mapn
       ;({ error } = await supabase.from('chitietnhap').insert(ct.map((c) => ({
-        mapn, manl: c.manl, soluongthucnhan: docSo(nhan[c.manl].sl),
+        mapn, manl: c.manl, soluongthucnhan: docSo(nhan[c.manl].sl), dongianhap: giaCu[c.manl],
       }))))
       if (error) { // hoàn tác phiếu rỗng
         await supabase.from('phieunhap').delete().eq('mapn', mapn)
@@ -135,7 +158,7 @@ export default function XuLyNhapHang() {
           </div>
         ))}
         <div className="xl-chan">
-          {banner ? <p className="xl-banner"><img src={iXong} alt="" />{banner}</p> : <span className="xl-goi-y">{cho?.length ? 'Bấm vào một dòng để chọn yêu cầu.' : ''}</span>}
+          {banner ? <p className="xl-banner"><img src={iXong} alt="" />{banner}</p> : <span />}
           <div className="xl-nut">
             <button className="nut nut-phu" disabled={!chon} onClick={() => doiTrangThai(YC.DA_HUY)}>Hủy yêu cầu</button>
             <button className="nut nut-xanh" disabled={!chon} onClick={() => doiTrangThai(YC.DA_DAT)}>Xác nhận đặt hàng</button>
@@ -153,11 +176,6 @@ export default function XuLyNhapHang() {
               <span><small>Ngày nhập</small><b>{ngay(homNay())}</b></span>
               <span><small>Nhà cung cấp</small><b>{yc.nhacungcap?.tenncc}</b></span>
             </div>
-          )}
-          {daDat.length > 1 && (
-            <select className="xl-chon-yc" value={maNhan} onChange={(e) => setMaNhan(e.target.value)} aria-label="Chọn yêu cầu đã đặt hàng">
-              {daDat.map((y) => <option key={y.mayc} value={y.mayc}>{y.mayc} – {y.nhacungcap?.tenncc}</option>)}
-            </select>
           )}
         </div>
         {!yc ? (

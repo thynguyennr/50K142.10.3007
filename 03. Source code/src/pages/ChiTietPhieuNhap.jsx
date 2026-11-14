@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { tien } from '../lib/format'
 import { ngay, soGon, CHUYEN_KHOAN } from '../lib/nhapHang'
@@ -8,7 +8,6 @@ import './NhapHang.css'
 // UC 4.3 Xem chi tiết phiếu nhập (chỉ xem)
 export default function ChiTietPhieuNhap() {
   const { mapn } = useParams()
-  const nav = useNavigate()
   const [p, setP] = useState(null)
   const [loi, setLoi] = useState('')
 
@@ -30,7 +29,6 @@ export default function ChiTietPhieuNhap() {
     <div className="nh">
       <div className="khung dau-trang">
         <h1>Xem phiếu nhập</h1>
-        <button className="nut nut-phu nh-quay-lai" onClick={() => nav('/nhap-hang')}>Quay lại</button>
       </div>
 
       <div className={'pn-than' + (ck ? '' : ' mot-cot')}>

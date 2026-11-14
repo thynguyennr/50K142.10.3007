@@ -8,7 +8,7 @@
   display: flex; align-items: center; gap: 7px; width: 291px; height: 43px; padding: 0 16px;
   background: var(--nen); border: 1px solid var(--nau-nhat); border-radius: 7px; color: var(--nau-phu);
 }
-.bh-tim span { font-size: 24px; line-height: 18px; transform: scaleX(-1); }
+.bh-tim img { flex: none; width: 16px; height: 16px; }
 .bh-tim input { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; color: var(--nau); font: 400 13px/18px var(--font); }
 .bh-tim input::placeholder { color: var(--nau-phu); }
 
