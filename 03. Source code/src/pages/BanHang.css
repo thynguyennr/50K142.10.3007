@@ -17,7 +17,7 @@
 .bh-than { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--hong) transparent; }
 .bh-dong {
   display: grid; align-items: center; height: 56px; border-bottom: 1px solid var(--nau-nhat);
-  grid-template-columns: 72px minmax(96px, .9fr) minmax(150px, 1.4fr) minmax(140px, 1.4fr) minmax(96px, .9fr) minmax(150px, 1.2fr) 330px;
+  grid-template-columns: 92px minmax(96px, .9fr) minmax(150px, 1.4fr) minmax(140px, 1.4fr) minmax(96px, .9fr) minmax(150px, 1.2fr) 330px;
   font: 600 13px/18px var(--font); color: var(--nau);
 }
 .bh-than .bh-dong:last-child { border-bottom: 0; }

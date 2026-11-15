@@ -46,7 +46,7 @@ export default function KhachQuen() {
 
   // Xuất tệp Excel .xlsx (thư viện tải khi bấm nút để không làm nặng trang)
   const xuat = async () => {
-    if (!ketQua?.length) return setThongBao({ loai: 'loi', noiDung: 'Không thể xuất danh sách', chiTiet: 'Hãy lọc ra ít nhất một khách hàng trước khi xuất.' })
+    if (!ketQua?.length) return setThongBao({ loai: 'loi', noiDung: 'Không thể xuất danh sách' })
     try {
       const XLSX = await import('xlsx')
       const dong = [['STT', 'Tên khách hàng', 'Số điện thoại', 'Số lần mua', 'Tổng tiền đã mua'],
@@ -59,7 +59,7 @@ export default function KhachQuen() {
       XLSX.writeFile(wb, `khach-quen-${n.getFullYear()}${String(n.getMonth() + 1).padStart(2, '0')}${String(n.getDate()).padStart(2, '0')}.xlsx`)
       setThongBao({ loai: 'thanh-cong', noiDung: 'Xuất danh sách thành công' })
     } catch (e) {
-      setThongBao({ loai: 'loi', noiDung: 'Không thể xuất danh sách', chiTiet: e.message })
+      setThongBao({ loai: 'loi', noiDung: 'Không thể xuất danh sách' })
     }
   }
 

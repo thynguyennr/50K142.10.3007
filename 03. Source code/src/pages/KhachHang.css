@@ -34,7 +34,7 @@
 .ctk-o em { display: block; margin-top: 6px; font-style: normal; font-size: 13px; font-weight: 500; text-transform: uppercase; color: #e53e3e; }
 .ctk-gt { padding-top: 7px; font-size: 20px; font-weight: 600; color: #3e2a1d; }
 .ctk-bang { flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 18px 24px 10px; }
-.ctk-dong { display: grid; grid-template-columns: 90px 1.6fr 2fr 1.2fr; align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border-bottom: 1px solid #a89585; font: 500 15px var(--font); color: #3e2a1d; }
+.ctk-dong { display: grid; grid-template-columns: 110px 1.6fr 2fr 1.2fr; align-items: center; gap: 10px; min-height: 52px; padding: 0 20px; border-bottom: 1px solid #a89585; font: 500 15px var(--font); color: #3e2a1d; }
 .ctk-dong.kh-dau { flex: none; border: 0; }
 .ctk-tong { flex: none; border-bottom: 0; font-weight: 600; }
 .ctk-nut { flex: none; display: flex; justify-content: flex-end; gap: 22px; margin-top: 14px; }
